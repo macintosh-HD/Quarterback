@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol OperationObserver {
+public protocol OperationObserver: AnyObject {
     func operationDidStart(_ operation: Operation)
     func operationWasCancelled(_ operation: Operation)
     func operationDidFinish(_ operation: Operation, withErrors errors: [Error])
