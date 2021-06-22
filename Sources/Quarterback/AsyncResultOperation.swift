@@ -10,11 +10,13 @@
 
 import Foundation
 
+public protocol AsyncResultError: Error {
+    static var cancelled: Self { get }
+}
+
 protocol AnyAsyncResultOperation: AsyncOperation {
     func cancel(with error: AsyncResultError)
 }
-
-public protocol AsyncResultError: Error {}
 
 open class AsyncResultOperation<Success, Failure>: AsyncOperation where Failure: AsyncResultError {
     

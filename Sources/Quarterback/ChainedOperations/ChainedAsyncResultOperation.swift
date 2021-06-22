@@ -34,6 +34,10 @@ open class ChainedAsyncResultOperation<Input, Output, Failure>: AsyncResultOpera
         }.first
     }
     
+    open override func cancel() {
+        cancel(with: .cancelled)
+    }
+    
 }
 
 extension ChainedAsyncResultOperation: ChainedOperationOutputProviding {
