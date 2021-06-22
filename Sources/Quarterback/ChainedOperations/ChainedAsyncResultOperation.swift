@@ -10,7 +10,11 @@
 
 import Foundation
 
-open class ChainedAsyncResultOperation<Input, Output, Failure>: AsyncResultOperation<Output, Failure> where Failure: AsyncResultError {
+public protocol ChainedAsyncResultError: AsyncResultError {
+    static var missingInput: Self { get }
+}
+
+open class ChainedAsyncResultOperation<Input, Output, Failure>: AsyncResultOperation<Output, Failure> where Failure: ChainedAsyncResultError {
     
     private(set) public var input: Input?
     
