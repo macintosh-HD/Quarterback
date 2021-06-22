@@ -8,49 +8,6 @@
 
 import Foundation
 
-public protocol OperationObserver {
-    func operationDidStart(_ operation: Operation)
-    func operationWasCancelled(_ operation: Operation)
-    func operationDidFinish(_ operation: Operation, withErrors errors: [Error])
-}
-
-open class ObservableOperation: AsyncOperation {
-    
-    public private(set) var observers = [OperationObserver]()
-    private var hasFinishedAlready = false
-    
-    public func addObserver(observer: OperationObserver) {
-        assert(!isExecuting, "Cannot modify observers after execution has begun.")
-        
-        observers.append(observer)
-    }
-    
-    open override func main() {
-        assert(isReady, "This operation must be performed on an operation queue.")
-        
-        observers.forEach { observer in
-            observer.operationDidStart(self)
-        }
-    }
-    
-    open override func cancel() {
-        observers.forEach { observer in
-            observer.operationWasCancelled(self)
-        }
-    }
-    
-    public override func finish() {
-        if !hasFinishedAlready {
-            observers.forEach { observer in
-                observer.operationDidFinish(self, withErrors: [])
-            }
-        }
-        
-        super.finish()
-    }
-    
-}
-
 open class GroupOperation: ObservableOperation {
     
     public let internalQueue = OperationQueue()
@@ -92,10 +49,4 @@ open class GroupOperation: ObservableOperation {
         super.main()
     }
     
-}
-
-extension OperationObserver {
-    func operationDidStart(_ operation: Operation) {}
-    func operationWasCancelled(_ operation: Operation) {}
-    func operationDidFinish(_ operation: Operation, withErrors errors: [Error]) {}
 }

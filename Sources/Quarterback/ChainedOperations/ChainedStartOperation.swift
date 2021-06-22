@@ -10,7 +10,7 @@ import Foundation
 
 open class ChainedStartOperation<Output>: Operation, ChainedOperationOutputProviding {
     
-    private(set) public var output: Any?
+    public private(set) var output: Any?
     
     public init(startValue output: Output) {
         self.output = output
