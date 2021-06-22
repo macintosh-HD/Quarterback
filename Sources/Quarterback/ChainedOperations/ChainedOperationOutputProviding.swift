@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol ChainedOperationOutputProviding {
+public protocol ChainedOperationOutputProviding {
     var output: Any? { get }
 }

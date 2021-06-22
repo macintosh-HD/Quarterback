@@ -37,7 +37,7 @@ open class ChainedAsyncResultOperation<Input, Output, Failure>: AsyncResultOpera
 }
 
 extension ChainedAsyncResultOperation: ChainedOperationOutputProviding {
-    var output: Any? {
+    public var output: Any? {
         return try? result?.get()
     }
 }
